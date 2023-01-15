@@ -1,22 +1,23 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import 'modern-normalize/modern-normalize.css'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { Home, Data, Profile } from './pages'
+import 'modern-normalize/modern-normalize.css'
 import { paths } from './constants'
 
+const { home, data, profile } = paths
 const router = createBrowserRouter([
   {
+    path: home,
     element: <Home />,
-    path: paths.home,
   },
   {
+    path: data,
     element: <Data />,
-    path: paths.data,
   },
   {
+    path: profile,
     element: <Profile />,
-    path: paths.profile,
   },
 ])
 

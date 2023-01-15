@@ -1,18 +1,24 @@
-import React from 'react'
+import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import { main } from '../../constants'
 
 const MainMenuStyled = styled.ul`
-  display: flex;
-  list-style: none;
-  margin: 0;
-  padding: 0;
+  ul {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    list-style: none;
 
-  li {
-    margin-left: 1rem;
+    li {
+      margin-left: 1rem;
 
-    &:first-child {
-      margin-left: 0;
+      &:first-child {
+        margin-left: 0;
+      }
+    }
+    a {
+      text-decoration: none;
     }
   }
 `
@@ -20,11 +26,15 @@ const MainMenuStyled = styled.ul`
 function MainMenu() {
   return (
     <MainMenuStyled>
-      {Object.values(main).map(({ path, label }) => (
-        <li key={path}>
-          <a href={path}>{label}</a>
-        </li>
-      ))}
+      <ul>
+        {Object.values(main).map(({ path, label }) => (
+          <li>
+            <Link key={path} to={path} label={label}>
+              {label}
+            </Link>
+          </li>
+        ))}
+      </ul>
     </MainMenuStyled>
   )
 }
