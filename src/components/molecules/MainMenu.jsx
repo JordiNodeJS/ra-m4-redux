@@ -1,6 +1,7 @@
-import { Link } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 import styled from 'styled-components'
 import { main } from '../../constants'
+import { colors, weight } from '../../styles'
 
 const MainMenuStyled = styled.ul`
   ul {
@@ -12,13 +13,19 @@ const MainMenuStyled = styled.ul`
 
     li {
       margin-left: 1rem;
-
       &:first-child {
         margin-left: 0;
       }
     }
     a {
       text-decoration: none;
+      &:visited {
+        color: ${colors.font.headings};
+      }
+    }
+    & .active {
+      color: ${colors.font.base} !important;
+      font-weight: ${weight.bolder};
     }
   }
 `
@@ -29,9 +36,9 @@ function MainMenu() {
       <ul>
         {Object.values(main).map(({ path, label }) => (
           <li key={path}>
-            <Link key={path} to={path} label={label}>
+            <NavLink key={path} to={path} label={label}>
               {label}
-            </Link>
+            </NavLink>
           </li>
         ))}
       </ul>

@@ -24,7 +24,7 @@ function Houses() {
       {isError && <div>Error</div>}
       {isSuccess && (
         <Grid gridGap="32px">
-          {houses.map((house) => (
+          {houses.map(house => (
             <HouseCard
               key={house.id}
               title={house.title}
