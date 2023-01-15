@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-console */
 import { useEffect, useState } from 'react'
 import styled from 'styled-components'
@@ -14,16 +15,18 @@ function Houses() {
   const [currentPage, setCurrentPage] = useState(1)
   const { data, loading, isError, isSuccess } = useFetch(urls.houses)
 
+  const ITEMS_PER_PAGE = 9
+  const totalPages = data ? Math.ceil(data.length / ITEMS_PER_PAGE) : 0
+
   const startLoading = page => {
-    const startIndex = (page - 1) * 9
+    const startIndex = (page - 1) * ITEMS_PER_PAGE
     const endIndex = page * 9
-    setHouses(data.slice(startIndex, endIndex))
+    const pisos = data.slice(startIndex, endIndex)
+    setHouses(pisos)
   }
 
   useEffect(() => {
     if (data) startLoading(currentPage)
-    console.log('useEffet')
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data, currentPage])
 
   return (
@@ -47,6 +50,7 @@ function Houses() {
         <Button
           style={{ marginTop: '2rem' }}
           onClick={() => setCurrentPage(currentPage + 1)}
+          disabled={currentPage >= totalPages}
         >
           Load more
         </Button>
