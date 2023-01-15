@@ -9,12 +9,12 @@ function useFetch(url) {
     setLoading(true)
     setError(null)
     fetch(url)
-      .then((response) => response.json())
-      .then((d) => {
+      .then(response => response.json())
+      .then(d => {
         setData(d)
         setLoading(false)
       })
-      .catch((err) => {
+      .catch(err => {
         setError(err)
         setLoading(false)
       })
