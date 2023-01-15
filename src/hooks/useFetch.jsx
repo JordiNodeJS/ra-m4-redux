@@ -20,7 +20,7 @@ function useFetch(url) {
       })
   }, [url])
 
-  return { data, loading, error, isError: !!error, isSuccess: !!data }
+  return { data, loading, error, isError: Boolean(error), isSuccess: Boolean(data) }
 }
 
 export default useFetch

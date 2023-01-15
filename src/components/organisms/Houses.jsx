@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react'
+/* eslint-disable no-console */
+import { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { Button } from '../atoms'
 import { HouseCard } from '../molecules'
@@ -13,10 +14,17 @@ function Houses() {
   const [currentPage, setCurrentPage] = useState(1)
   const { data, loading, isError, isSuccess } = useFetch(urls.houses)
 
+  const startLoading = page => {
+    const startIndex = (page - 1) * 9
+    const endIndex = page * 9
+    setHouses(data.slice(startIndex, endIndex))
+  }
+
   useEffect(() => {
-    if (!data) return
-    setHouses(data)
-  }, [data])
+    if (data) startLoading(currentPage)
+    console.log('useEffet')
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data, currentPage])
 
   return (
     <HousesStyled>
