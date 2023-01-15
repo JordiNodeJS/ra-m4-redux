@@ -28,7 +28,7 @@ function MainMenu() {
     <MainMenuStyled>
       <ul>
         {Object.values(main).map(({ path, label }) => (
-          <li>
+          <li key={path}>
             <Link key={path} to={path} label={label}>
               {label}
             </Link>
