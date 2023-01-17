@@ -36,7 +36,7 @@ function SubHeader({ ...props }) {
             label="Tipo"
             defaultText="Piso, chalet o garaje..."
             hideLabel
-            options={[
+            options={[ // move this data to redux
               { value: 'piso', text: 'Piso' },
               { value: 'garaje', text: 'Garaje' },
               { value: 'chalets', text: 'Chalets' },
