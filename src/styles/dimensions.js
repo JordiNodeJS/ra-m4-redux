@@ -10,7 +10,7 @@ const dimensions = {
   font: {
     base: '16px',
     h1: '52px',
-    h2: '...',
+    h2: '48px',
   },
   borderRadius: {
     base: '4px',

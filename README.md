@@ -1,9 +1,10 @@
 # Module 4. Redux
 
+Inicialización de la app
+`pnpm dev`
 
-
-
-
+Lanzando el server de pruebas
+`pnpm serve`
 
 ## Recordatorios
 — Todas las entregas han de realizarse en repositorios de github.com y se deberá crear un repositorio por cada ejercicio.

@@ -9,18 +9,18 @@ function useFetch(url) {
     setLoading(true)
     setError(null)
     fetch(url)
-      .then((response) => response.json())
-      .then((d) => {
+      .then(response => response.json())
+      .then(d => {
         setData(d)
         setLoading(false)
       })
-      .catch((err) => {
+      .catch(err => {
         setError(err)
         setLoading(false)
       })
   }, [url])
 
-  return { data, loading, error, isError: !!error, isSuccess: !!data }
+  return { data, loading, error, isError: Boolean(error), isSuccess: Boolean(data) }
 }
 
 export default useFetch
