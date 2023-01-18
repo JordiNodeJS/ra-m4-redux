@@ -23,8 +23,9 @@ export const userSlice = createSlice({
   },
 })
 
-// Action creators are generated for each case reducer function
-export const { updateName, updateFirstSurname, updateSecondSurname } =
-  userSlice.actions
+const {actions, reducer } = userSlice
 
-export default userSlice.reducer
+// Action creators are generated for each case reducer function
+export const { updateName, updateFirstSurname, updateSecondSurname } = actions
+
+export default reducer
