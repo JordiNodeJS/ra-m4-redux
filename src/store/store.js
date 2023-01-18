@@ -1,8 +1,9 @@
 import { configureStore } from '@reduxjs/toolkit'
-import { userSlice } from './userSlice'
+import userReducer from './userSlice'
+
 // eslint-disable-next-line import/prefer-default-export
 export const store = configureStore({
   reducer: {
-    user: userSlice
+    user: userReducer
   },
 })

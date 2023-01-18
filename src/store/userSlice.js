@@ -1,16 +1,15 @@
+// @filename: userSlice.js
 import { createSlice } from '@reduxjs/toolkit'
-
-const initialState = {
-  name: 'Stanley',
-  surnames: {
-    first: 'Kubrick',
-    second: 'Dev',
-  },
-}
 
 export const userSlice = createSlice({
   name: 'user',
-  initialState,
+  initialState: {
+    name: 'Stanley',
+    surnames: {
+      first: 'Kubrick',
+      second: 'Dev',
+    },
+  },
   reducers: {
     updateName: (state, action) => {
       state.name = action.payload
@@ -25,11 +24,7 @@ export const userSlice = createSlice({
 })
 
 // Action creators are generated for each case reducer function
-export const {
-  updateName,
-  updateSurname,
-  updateFirstSurname,
-  updateSecondSurname,
-} = userSlice.actions
+export const { updateName, updateFirstSurname, updateSecondSurname } =
+  userSlice.actions
 
 export default userSlice.reducer
