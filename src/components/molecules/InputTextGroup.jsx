@@ -1,13 +1,20 @@
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
+import { dimensions } from '../../styles'
 import { InputText, Label } from '../atoms'
+
+const InputTextGroupStyled = styled.div`
+  ${InputText} {
+    margin-left: ${dimensions.spacing.sm};
+  }
+`
 
 export function InputTextGroup({ label, id, onChange, ...rest }) {
   return (
-    <div>
+    <InputTextGroupStyled>
       <Label htmlFor={id}>{label}</Label>
       <InputText type="text" id={id} name={id} onChange={onChange} {...rest} />
-    </div>
+    </InputTextGroupStyled>
   )
 }
 
