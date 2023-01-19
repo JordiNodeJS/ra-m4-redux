@@ -1,4 +1,5 @@
 import { useSelector } from 'react-redux'
+import { Text } from '../components/atoms'
 import { Body } from '../components/layout'
 import { InputTextGroup } from '../components/molecules'
 import { selectUser } from '../store/userSlice'
@@ -11,20 +12,20 @@ const UserProfile = () => {
   const user = useSelector(selectUser)
   return (
     <FlexBox>
-      <p>
+      <Text>
         <strong>Nombre:</strong>: {user.name}
-      </p>
-      <p>
+      </Text>
+      <Text>
         <strong>Apellido:</strong>: {user.surnames.first}
-      </p>
+      </Text>
     </FlexBox>
   )
 }
 // eslint-disable-next-line react/function-component-definition
 const UpdateForm = () => (
   <FlexBox as="form">
-    <h2>Form</h2>
     <InputTextGroup label="Nombre" id="nombre" onChange={handleChange} />
+    <InputTextGroup label="Apellido" id="apellido" onChange={handleChange} />
   </FlexBox>
 )
 
