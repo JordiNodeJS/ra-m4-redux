@@ -1,4 +1,5 @@
 // @filename: userSlice.js
+
 import { createSlice } from '@reduxjs/toolkit'
 
 export const userSlice = createSlice({
@@ -24,6 +25,8 @@ export const userSlice = createSlice({
 })
 
 const {actions, reducer } = userSlice
+
+export const selectUser = state => state.user
 
 // Action creators are generated for each case reducer function
 export const { updateName, updateFirstSurname, updateSecondSurname } = actions
