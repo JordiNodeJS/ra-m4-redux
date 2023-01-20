@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Button, Text } from '../components/atoms'
 import { Body } from '../components/layout'
 import { InputTextGroup } from '../components/molecules'
-import { selectUser, updateFirstSurname, updateName } from '../store/userSlice'
+import { selectUser, updateFirstSurname, updateName } from '../store/slices/userSlice'
 import { Container, FlexBox } from '../styles'
 
 // eslint-disable-next-line react/function-component-definition
