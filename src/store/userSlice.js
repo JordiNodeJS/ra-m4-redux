@@ -24,7 +24,7 @@ export const userSlice = createSlice({
   },
 })
 
-const {actions, reducer } = userSlice
+const { actions, reducer } = userSlice
 
 export const selectUser = state => state.user
 
