@@ -3,7 +3,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { urls } from '../../constants'
 
-
 export const getHouses = createAsyncThunk('houses/getHouses', async () => {
   const res = await fetch(urls.houses)
   const data = await res.json()
@@ -13,24 +12,23 @@ export const getHouses = createAsyncThunk('houses/getHouses', async () => {
 export const houseSlice = createSlice({
   name: 'houses',
   initialState: {
-    reqStatus: 'loading',
+    reqStatus: 'initial',
     houses: [],
   },
   reducers: {},
   extraReducers: builder => {
     // Add reducers for additional action types here, and handle loading state as needed
-    builder
-      .addCase(getHouses.pending, state => {
-        state.reqStatus = 'loading'
-      })
-      .addCase(getHouses.rejected, state => {
-        // Add user to the state array
-        state.reqStatus = 'failed'
-      })
-      .addCase(getHouses.fulfilled, (state, action) => {
-        state.reqStatus = 'success'
-        state.houses.push(...action.payload)
-      })
+    builder.addCase(getHouses.pending, state => {
+      state.reqStatus = 'loading'
+    })
+    .addCase(getHouses.rejected, state => {
+      // Add user to the state array
+      state.reqStatus = 'failed'
+    })
+    .addCase(getHouses.fulfilled, (state, action) => {
+      state.reqStatus = 'success'
+      state.houses.push(...action.payload)
+    })
   },
 })
 
