@@ -23,10 +23,6 @@ const router = createBrowserRouter([
   },
 ])
 
-const state = store
-// eslint-disable-next-line no-console
-console.log('state', state)
-
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <Provider store={store}>
