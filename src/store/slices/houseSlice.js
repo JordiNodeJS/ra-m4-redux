@@ -3,11 +3,13 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { urls } from '../../constants'
 
-function removeDuplicates(arr) {
-  return arr.filter(
-    (el, index) => arr.findIndex(e => e.value === el.value) === index,
+const removeDuplicates = arr =>
+  arr.filter((el, index) => arr.findIndex(e => e.value === el.value) === index)
+
+const removeDuplicatesWithSet = arr =>
+  [...new Set(arr.map(obj => obj.value))].map(value =>
+    arr.find(obj => obj.value === value),
   )
-}
 
 // thunks
 export const getHouses = createAsyncThunk('houses/getHouses', async () => {
