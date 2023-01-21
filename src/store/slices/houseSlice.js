@@ -16,28 +16,59 @@ export const houseSlice = createSlice({
     reqStatus: 'initial',
     housesList: {
       byId: {},
-      allId: [],
+      allIds: [],
+      byCities: [],
+      byCategories: [],
     },
   },
   reducers: {},
   extraReducers: builder => {
-    // Add reducers for additional action types here, and handle loading state as needed
+    
     builder
       .addCase(getHouses.pending, state => {
         state.reqStatus = 'loading'
       })
       .addCase(getHouses.rejected, state => {
-        // Add user to the state array
         state.reqStatus = 'failed'
       })
       .addCase(getHouses.fulfilled, (state, action) => {
         state.reqStatus = 'success'
-        
+
         action.payload.forEach(house => {
-          state.housesList.byId[house.id] = house
-          state.housesList.allId.push(house.id)
-          state.housesList.allId = [...new Set(state.housesList.allId)]
+          const { id, city, type } = house
+          state.housesList.byId[id] = house
+
+          if (!state.housesList.allIds.includes(id)) {
+            state.housesList.allIds.push(id)
+          }
+          // CITIES 🏙
+          state.housesList.byCities.push({
+            value: city,
+            text: city.charAt(0).toUpperCase() + city.slice(1),
+          })
+          // CATEGORIES 🏡🏰
+          state.housesList.byCategories.push({
+            value: type,
+            text: type.charAt(0).toUpperCase() + type.slice(1),
+          })
+
         })
+
+        // UNIQUE CITIES 👇 
+        state.housesList.byCities = state.housesList.byCities.filter(
+          (elCity, index) =>
+            state.housesList.byCities.findIndex(
+              e => e.value === elCity.value, 
+            ) === index, 
+        )
+        // UNIQUE CATEGORIES 👇
+        state.housesList.byCategories = state.housesList.byCategories.filter(
+          (elCity, index) =>
+            state.housesList.byCategories.findIndex(
+              e => e.value === elCity.value, 
+            ) === index, 
+        )
+
       })
   },
 })
