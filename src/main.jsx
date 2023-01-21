@@ -23,13 +23,13 @@ const router = createBrowserRouter([
   },
 ])
 
-const state = store.getState()
-console.log('state', state)
+// const state = store.getState()
+// console.log('state', state)
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <Provider store={store}>
       <RouterProvider router={router} />
     </Provider>
-  </React.StrictMode>,
+   </React.StrictMode>,
 )
