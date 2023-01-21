@@ -3,6 +3,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { urls } from '../../constants'
 
+// thunks
 export const getHouses = createAsyncThunk('houses/getHouses', async () => {
   const res = await fetch(urls.houses)
   const data = await res.json()
@@ -13,7 +14,7 @@ export const houseSlice = createSlice({
   name: 'houses',
   initialState: {
     reqStatus: 'initial',
-    houses: [],
+    housesList: [],
   },
   reducers: {},
   extraReducers: builder => {
@@ -27,14 +28,14 @@ export const houseSlice = createSlice({
     })
     .addCase(getHouses.fulfilled, (state, action) => {
       state.reqStatus = 'success'
-      state.houses.push(...action.payload)
+      state.housesList = action.payload
     })
   },
 })
 
-const { actions, reducer } = houseSlice
 
-export const selectHouse = state => state.house
+
+const { actions, reducer } = houseSlice
 
 // Action creators are generated for each case reducer function
 export const { updateName } = actions
