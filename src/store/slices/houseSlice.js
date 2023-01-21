@@ -60,22 +60,11 @@ export const houseSlice = createSlice({
 
         // UNIQUE CITIES 👇
         state.housesList.byCities = removeDuplicates(state.housesList.byCities)
-        // state.housesList.byCities = state.housesList.byCities.filter(
-        //   (elCity, index) =>
-        //     state.housesList.byCities.findIndex(
-        //       e => e.value === elCity.value,
-        //     ) === index,
-        // )
+
         // UNIQUE CATEGORIES 👇
         state.housesList.byCategories = removeDuplicates(
           state.housesList.byCategories,
         )
-        // state.housesList.byCategories = state.housesList.byCategories.filter(
-        //   (elCity, index) =>
-        //     state.housesList.byCategories.findIndex(
-        //       e => e.value === elCity.value,
-        //     ) === index,
-        // )
       })
   },
 })
