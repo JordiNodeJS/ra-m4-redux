@@ -47,10 +47,14 @@ export const houseSlice = createSlice({
             state.housesList.allIds.push(id)
           }
           // CITIES 🏙
-          state.housesList.byCities.push({
-            value: city,
-            text: city.charAt(0).toUpperCase() + city.slice(1),
-          })
+          const isCity = state.housesList.byCities.find(c => c.value === city)
+          if (!isCity) {
+            state.housesList.byCities.push({
+              value: city,
+              text: city.charAt(0).toUpperCase() + city.slice(1),
+            })
+          }
+
           // CATEGORIES 🏡🏰
           state.housesList.byCategories.push({
             value: type,
@@ -59,7 +63,7 @@ export const houseSlice = createSlice({
         })
 
         // UNIQUE CITIES 👇
-        state.housesList.byCities = removeDuplicates(state.housesList.byCities)
+        // state.housesList.byCities = removeDuplicates(state.housesList.byCities)
 
         // UNIQUE CATEGORIES 👇
         state.housesList.byCategories = removeDuplicates(
