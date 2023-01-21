@@ -1,3 +1,4 @@
+/* eslint-disable react/function-component-definition */
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { getHouses } from '../store/slices/houseSlice'
@@ -15,17 +16,16 @@ function Data() {
     console.log('houses', byId)
   }, [byId])
 
-
-
+  const renderHouses = Object.values(byId).map(house => (
+    <li key={house.id}>
+      {house.title} <img src={house.image} alt={house.title} width={20} />
+    </li>
+  ))
 
   return (
     <Body>
       <h1>Lista de casas</h1>
-      <ul>
-        {Object.values(byId).map(house => (
-          <li key={house.id}>{house.title}</li>
-        ))}
-      </ul>
+      <ul>{renderHouses}</ul>
     </Body>
   )
 }
