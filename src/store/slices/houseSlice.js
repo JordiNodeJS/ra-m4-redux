@@ -3,6 +3,12 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { urls } from '../../constants'
 
+function removeDuplicates(arr) {
+  return arr.filter(
+    (el, index) => arr.findIndex(e => e.value === el.value) === index,
+  )
+}
+
 // thunks
 export const getHouses = createAsyncThunk('houses/getHouses', async () => {
   const res = await fetch(urls.houses)
@@ -23,7 +29,6 @@ export const houseSlice = createSlice({
   },
   reducers: {},
   extraReducers: builder => {
-    
     builder
       .addCase(getHouses.pending, state => {
         state.reqStatus = 'loading'
@@ -51,24 +56,26 @@ export const houseSlice = createSlice({
             value: type,
             text: type.charAt(0).toUpperCase() + type.slice(1),
           })
-
         })
 
-        // UNIQUE CITIES 👇 
-        state.housesList.byCities = state.housesList.byCities.filter(
-          (elCity, index) =>
-            state.housesList.byCities.findIndex(
-              e => e.value === elCity.value, 
-            ) === index, 
-        )
+        // UNIQUE CITIES 👇
+        state.housesList.byCities = removeDuplicates(state.housesList.byCities)
+        // state.housesList.byCities = state.housesList.byCities.filter(
+        //   (elCity, index) =>
+        //     state.housesList.byCities.findIndex(
+        //       e => e.value === elCity.value,
+        //     ) === index,
+        // )
         // UNIQUE CATEGORIES 👇
-        state.housesList.byCategories = state.housesList.byCategories.filter(
-          (elCity, index) =>
-            state.housesList.byCategories.findIndex(
-              e => e.value === elCity.value, 
-            ) === index, 
+        state.housesList.byCategories = removeDuplicates(
+          state.housesList.byCategories,
         )
-
+        // state.housesList.byCategories = state.housesList.byCategories.filter(
+        //   (elCity, index) =>
+        //     state.housesList.byCategories.findIndex(
+        //       e => e.value === elCity.value,
+        //     ) === index,
+        // )
       })
   },
 })
