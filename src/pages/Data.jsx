@@ -5,21 +5,24 @@ import { Body } from '../components/layout'
 
 function Data() {
   const dispatch = useDispatch()
-  const { housesList } = useSelector(state => state.houses)
+  const { byId } = useSelector(state => state.houses.housesList)
 
   useEffect(() => {
     dispatch(getHouses())
   }, [dispatch])
 
   useEffect(() => {
-    console.log('houses', housesList)
-  }, [housesList])
+    console.log('houses', byId)
+  }, [byId])
+
+
+
 
   return (
     <Body>
       <h1>Lista de casas</h1>
       <ul>
-        {housesList.map(house => (
+        {Object.values(byId).map(house => (
           <li key={house.id}>{house.title}</li>
         ))}
       </ul>

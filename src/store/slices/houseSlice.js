@@ -14,26 +14,33 @@ export const houseSlice = createSlice({
   name: 'houses',
   initialState: {
     reqStatus: 'initial',
-    housesList: [],
+    housesList: {
+      byId: {},
+      allId: [],
+    },
   },
   reducers: {},
   extraReducers: builder => {
     // Add reducers for additional action types here, and handle loading state as needed
-    builder.addCase(getHouses.pending, state => {
-      state.reqStatus = 'loading'
-    })
-    .addCase(getHouses.rejected, state => {
-      // Add user to the state array
-      state.reqStatus = 'failed'
-    })
-    .addCase(getHouses.fulfilled, (state, action) => {
-      state.reqStatus = 'success'
-      state.housesList = action.payload
-    })
+    builder
+      .addCase(getHouses.pending, state => {
+        state.reqStatus = 'loading'
+      })
+      .addCase(getHouses.rejected, state => {
+        // Add user to the state array
+        state.reqStatus = 'failed'
+      })
+      .addCase(getHouses.fulfilled, (state, action) => {
+        state.reqStatus = 'success'
+        
+        action.payload.forEach(house => {
+          state.housesList.byId[house.id] = house
+          state.housesList.allId.push(house.id)
+          state.housesList.allId = [...new Set(state.housesList.allId)]
+        })
+      })
   },
 })
-
-
 
 const { actions, reducer } = houseSlice
 
