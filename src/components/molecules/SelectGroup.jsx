@@ -9,7 +9,7 @@ function SelectGroup({
   id,
   onChange,
   options = [],
-  defaultValue = '',
+  value = '',
   defaultText = '',
   hideLabel = false,
   ...rest
@@ -24,7 +24,7 @@ function SelectGroup({
         name={id}
         onChange={onChange}
         {...rest}
-        defaultValue={defaultValue}
+        value={value}
       >
         <SelectOption value="" disabled>
           {defaultText}
@@ -49,7 +49,7 @@ SelectGroup.propTypes = {
       text: PropTypes.string.isRequired,
     }),
   ),
-  defaultValue: PropTypes.string,
+  value: PropTypes.string,
   defaultText: PropTypes.string,
   hideLabel: PropTypes.bool,
 }
