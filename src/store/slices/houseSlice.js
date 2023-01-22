@@ -30,7 +30,7 @@ export const houseSlice = createSlice({
     },
     selectCity: (state, action) => {
       state.citySelected = action.payload
-    }
+    },
   },
   extraReducers: builder => {
     builder
@@ -57,6 +57,7 @@ export const houseSlice = createSlice({
               value: city,
               text: city.charAt(0).toUpperCase() + city.slice(1),
             })
+            state.housesList[city] = []
           }
 
           // CATEGORIES 🏡🏰
@@ -73,6 +74,9 @@ export const houseSlice = createSlice({
         state.housesList.byCategories = removeDuplicates(
           state.housesList.byCategories,
         )
+        state.housesList.byCategories.forEach(category => {
+          state.housesList[category.value] = []
+        })
       })
   },
 })
