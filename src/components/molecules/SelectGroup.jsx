@@ -26,7 +26,7 @@ function SelectGroup({
         {...rest}
         value={value}
       >
-        <SelectOption value="" disabled>
+        <SelectOption selected value="" disabled>
           {defaultText}
         </SelectOption>
         {options.map((option) => (
