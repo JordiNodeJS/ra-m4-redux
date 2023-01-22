@@ -27,6 +27,9 @@ export const houseSlice = createSlice({
   reducers: {
     selectCategory: (state, action) => {
       state.categorySelected = action.payload
+    },
+    selectCity: (state, action) => {
+      state.citySelected = action.payload
     }
   },
   extraReducers: builder => {
@@ -77,6 +80,6 @@ export const houseSlice = createSlice({
 const { actions, reducer } = houseSlice
 
 // Action creators are generated for each case reducer function
-export const { selectCategory } = actions
+export const { selectCategory, selectCity } = actions
 
 export default reducer
