@@ -43,9 +43,9 @@ export const houseSlice = createSlice({
       .addCase(getHouses.fulfilled, (state, action) => {
         state.reqStatus = 'success'
 
-        action.payload.forEach(houseApi => {
-          const { id, city, type } = houseApi
-          state.housesList.byId[id] = houseApi
+        action.payload.forEach(house => {
+          const { id, city, type } = house
+          state.housesList.byId[id] = house
 
           if (!state.housesList.allIds.includes(id)) {
             state.housesList.allIds.push(id)
