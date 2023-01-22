@@ -1,7 +1,11 @@
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components'
-import { getHouses, selectCategory } from '../../store/slices/houseSlice'
+import {
+  getHouses,
+  selectCategory,
+  selectCity,
+} from '../../store/slices/houseSlice'
 import { colors, Container, dimensions, FlexBox } from '../../styles'
 import { Button, Icon } from '../atoms'
 import { SelectGroup } from '../molecules'
@@ -33,7 +37,9 @@ function SubHeader({ ...props }) {
   const {
     housesList: { byCities, byCategories },
     categorySelected,
+    citySelected,
   } = useSelector(state => state.houses)
+
   useEffect(() => {
     dispatch(getHouses())
   }, [dispatch])
@@ -44,6 +50,7 @@ function SubHeader({ ...props }) {
 
   // handles
   const handleChangeCategory = e => dispatch(selectCategory(e.target.value))
+  const handleChangeCity = e => dispatch(selectCity(e.target.value))
 
   return (
     <SubHeaderStyled {...props}>
@@ -65,6 +72,8 @@ function SubHeader({ ...props }) {
             defaultText="Madrid, Barcelona o Zaragoza..."
             hideLabel
             options={byCities}
+            onChange={handleChangeCity}
+            value={citySelected}
           />
 
           <Button>
