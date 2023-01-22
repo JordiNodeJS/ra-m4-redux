@@ -2,7 +2,7 @@
 
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { urls } from '../../constants'
-import { removeDuplicates } from '../utils'
+import { removeDuplicates } from './utils'
 
 // thunks
 export const getHouses = createAsyncThunk('houses/getHouses', async () => {

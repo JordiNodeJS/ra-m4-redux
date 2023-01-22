@@ -46,6 +46,7 @@ function SubHeader({ ...props }) {
 
   useEffect(() => {
     dispatch(selectCategory(''))
+    dispatch(selectCity(''))
   }, [dispatch])
 
   // handles
@@ -63,7 +64,7 @@ function SubHeader({ ...props }) {
             defaultText="Piso, chalet o garaje..."
             options={byCategories}
             onChange={handleChangeCategory}
-            value={categorySelected}
+            defaultValue={categorySelected}
           />
 
           <SelectGroup
@@ -73,7 +74,7 @@ function SubHeader({ ...props }) {
             hideLabel
             options={byCities}
             onChange={handleChangeCity}
-            value={citySelected}
+            defaultValue={citySelected}
           />
 
           <Button>
