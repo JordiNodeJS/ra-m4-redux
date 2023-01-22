@@ -57,7 +57,7 @@ export const houseSlice = createSlice({
               value: city,
               text: city.charAt(0).toUpperCase() + city.slice(1),
             })
-            state.housesList[city] = []
+            state.housesList[city] = [] // create states base on cities
           }
 
           // CATEGORIES 🏡🏰
@@ -75,7 +75,7 @@ export const houseSlice = createSlice({
           state.housesList.byCategories,
         )
         state.housesList.byCategories.forEach(category => {
-          state.housesList[category.value] = []
+          state.housesList[category.value] = [] // create states base on categories
         })
       })
   },
