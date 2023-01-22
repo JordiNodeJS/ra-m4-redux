@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components'
-import { getHouses } from '../../store/slices/houseSlice'
+import { getHouses, selectCategory } from '../../store/slices/houseSlice'
 import { colors, Container, dimensions, FlexBox } from '../../styles'
 import { Button, Icon } from '../atoms'
 import { SelectGroup } from '../molecules'
@@ -32,12 +32,18 @@ function SubHeader({ ...props }) {
   const dispatch = useDispatch()
   const {
     housesList: { byCities, byCategories },
+    categorySelected,
   } = useSelector(state => state.houses)
-
   useEffect(() => {
     dispatch(getHouses())
   }, [dispatch])
-  
+
+  useEffect(() => {
+    dispatch(selectCategory(''))
+  }, [dispatch])
+
+  // handles
+  const handleChangeCategory = e => dispatch(selectCategory(e.target.value))
 
   return (
     <SubHeaderStyled {...props}>
@@ -46,9 +52,11 @@ function SubHeader({ ...props }) {
           <SelectGroup
             id="type"
             label="Tipo"
-            defaultText="Piso, chalet o garaje..."
             hideLabel
+            defaultText="Piso, chalet o garaje..."
             options={byCategories}
+            onChange={handleChangeCategory}
+            value={categorySelected}
           />
 
           <SelectGroup
