@@ -19,8 +19,8 @@ export const houseSlice = createSlice({
     categorySelected: '',
     citySelected: '',
     housesList: {
-      byCities: [{value: 'all', text: 'All'}], //  byCities: [{value: 'madrid', text: 'Madrid' }, {...}, {..}]
-      byCategories: [{value: 'all', text: 'All'}], // byCategories:  [{value: 'garaje', text: 'Garaje' }, {...}, {..}]
+      byCities: [{value: 'allIds', text: 'All'}], //  byCities: [{value: 'madrid', text: 'Madrid' }, {...}, {..}]
+      byCategories: [{value: 'allIds', text: 'All'}], // byCategories:  [{value: 'garaje', text: 'Garaje' }, {...}, {..}]
       allIds: [],
       byId: {}
       /* 
@@ -35,11 +35,13 @@ export const houseSlice = createSlice({
   },
   reducers: {
     selectCategory: (state, action) => {
-      state.categorySelected = action.payload
+      state.categorySelected = action.payload // <-- category
+      if (action.payload !== 'allIds') {
+        state.housesList[action.payload] = Object.entries(state.housesList.byId)
+          .filter(([, house]) => house.type === action.payload)
+          .map(([id]) => +id)
+      }
 
-      state.housesList[action.payload] = Object.entries(state.housesList.byId)
-      .filter(([, house]) => house.type === action.payload)
-      .map(([id]) => +id)
     },
     selectCity: (state, action) => {
       state.citySelected = action.payload
@@ -49,7 +51,7 @@ export const houseSlice = createSlice({
       .map(id => +id)
     },
     loadMore: (state, action) => {
-      state.currentPage = action.payload
+      state.page = action.payload + 1
     }
   },
   extraReducers: builder => {
@@ -81,22 +83,29 @@ export const houseSlice = createSlice({
           }
 
           // CATEGORIES 🏡🏰
-          state.housesList.byCategories.push({
-            value: type,
-            text: type.charAt(0).toUpperCase() + type.slice(1),
+          const isCategory = state.housesList.byCategories.find(c => c.value === type)
+          if (!isCategory) {
+            state.housesList.byCategories.push({
+              value: type,
+              text: type.charAt(0).toUpperCase() + type.slice(1),
           })
+          }
+          state.housesList.byId[id] = house
+
         })
 
         // UNIQUE CITIES 👇
         // state.housesList.byCities = removeDuplicates(state.housesList.byCities)
 
         // UNIQUE CATEGORIES 👇
-        state.housesList.byCategories = removeDuplicates(
-          state.housesList.byCategories,
-        )
-        state.housesList.byCategories.forEach(category => {
-          state.housesList[category.value] = [] // create states base on categories
-        })
+        // state.housesList.byCategories = removeDuplicates(
+        //   state.housesList.byCategories,
+        // )
+        // create states base on categories
+        // state.housesList.byCategories.forEach(category => {
+        //  if (category.value !== 'allIds' ) state.housesList[category.value] = [] 
+        // })
+        
       })
   },
 })

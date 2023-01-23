@@ -12,12 +12,13 @@ const HousesStyled = styled(FlexBox)``
 
 function Houses() {
   const [houses, setHouses] = useState([])
-
-  const { categorySelected, housesList, reqStatus } = useSelector(state => state.houses)
-  const { byId, allIds, page } = housesList
+  
+  const { categorySelected, housesList, reqStatus, page } = useSelector(state => state.houses)
+  const { byId, allIds } = housesList
   const category = housesList[categorySelected] ? [...housesList[categorySelected]] : []
+  
 
-  const currentPage = page || 1
+ 
   
   const dispatch = useDispatch()
   useEffect(() => {
@@ -30,23 +31,25 @@ function Houses() {
   : 0
 
   
-  const startLoading = page => {
-    const startIndex = (page - 1) * ITEMS_PER_PAGE
-    const endIndex = page * ITEMS_PER_PAGE
+  const startLoading = (p = 1) => {
+    const startIndex = (p - 1) * ITEMS_PER_PAGE
+    const endIndex = p * ITEMS_PER_PAGE
     
     let data = allIds.map(key => byId[key])
     console.log('🥒', data)
     console.log('housesList[categorySelected]', housesList[categorySelected])
-    if (housesList[categorySelected]?.length !== 0) {
+    if (Array.isArray(housesList[categorySelected]) && housesList[categorySelected].length ) {
+      // if (housesList[categorySelected] === 'allIds') {
+      //   console.log('🏘 🧨 category', categorySelected, category)
+      //   console.log('🧨 data category', data)
+      //   data = allIds.map(key => byId[key])
+      //   return
+      // }
       data = category.map(key => byId[key])
       console.log('🏘 category', categorySelected, category)
       console.log('🐒 data category', data)
     }
-    // if (housesList[categorySelected] === 'all') {
-    //   console.log('🏘 category', categorySelected, category)
-    //   console.log('🐒 data category', data)
-    //   data = allIds.map(key => byId[key])
-    // }
+
     console.log('data after if', data)
     const pisos = data.slice(startIndex, endIndex)
     console.log('pisos', pisos)
@@ -54,11 +57,11 @@ function Houses() {
   }
 
   useEffect(() => {
-    console.log('startLoading', currentPage )
-    if (currentPage) startLoading(currentPage)
-  }, [allIds, categorySelected, currentPage])
+    console.log('startLoading', page )
+    startLoading(page)
+  }, [allIds, categorySelected, page])
 
-  const handleClick = () => dispatch(loadMore(currentPage + 1))
+  const handleClick = () => dispatch(loadMore(page))
 
 
   return (
