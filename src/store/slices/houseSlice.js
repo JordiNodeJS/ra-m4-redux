@@ -19,8 +19,8 @@ export const houseSlice = createSlice({
     categorySelected: '',
     citySelected: '',
     housesList: {
-      byCities: [{value: 'all', text: 'All'}], //  byCities: [{value: 'madrid', text: 'Madrid' }, {...}, {..}]
-      byCategories: [{value: 'all', text: 'All'}], // byCategories:  [{value: 'garaje', text: 'Garaje' }, {...}, {..}]
+      byCities: [{value: 'allIds', text: 'All'}], //  byCities: [{value: 'madrid', text: 'Madrid' }, {...}, {..}]
+      byCategories: [{value: 'allIds', text: 'All'}], // byCategories:  [{value: 'garaje', text: 'Garaje' }, {...}, {..}]
       allIds: [],
       byId: {}
       /* 
@@ -94,9 +94,11 @@ export const houseSlice = createSlice({
         state.housesList.byCategories = removeDuplicates(
           state.housesList.byCategories,
         )
+        // create states base on categories
         state.housesList.byCategories.forEach(category => {
-          state.housesList[category.value] = [] // create states base on categories
+         if (category.value !== 'allIds' ) state.housesList[category.value] = [] 
         })
+        
       })
   },
 })
