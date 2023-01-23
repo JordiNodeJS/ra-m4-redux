@@ -22,6 +22,14 @@ export const houseSlice = createSlice({
       allIds: [],
       byCities: [], //  byCities: [{value: 'madrid', text: 'Madrid' }, {...}, {..}]
       byCategories: [], // byCategories:  [{value: 'garaje', text: 'Garaje' }, {...}, {..}]
+      /* 
+      madrid: [],
+      barcelona: [],
+      zaragoza: [],
+      garaje: [],
+      chalets: [],
+      piso: []
+      */
     },
   },
   reducers: {

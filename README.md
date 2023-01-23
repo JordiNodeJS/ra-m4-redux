@@ -1,9 +1,12 @@
 # Module 4. Redux
 
-Inicialización de la app
+## Instalación
+`pnpm i`
+
+## Inicialización de la app
 `pnpm dev`
 
-Lanzando el server de pruebas
+## Lanzando el server de pruebas
 `pnpm serve`
 
 ## Recordatorios
