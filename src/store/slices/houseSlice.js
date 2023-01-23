@@ -15,13 +15,14 @@ export const houseSlice = createSlice({
   name: 'houses',
   initialState: {
     reqStatus: 'initial',
+    page: 1,
     categorySelected: '',
     citySelected: '',
     housesList: {
-      byId: {},
+      byCities: [{value: 'all', text: 'All'}], //  byCities: [{value: 'madrid', text: 'Madrid' }, {...}, {..}]
+      byCategories: [{value: 'all', text: 'All'}], // byCategories:  [{value: 'garaje', text: 'Garaje' }, {...}, {..}]
       allIds: [],
-      byCities: [], //  byCities: [{value: 'madrid', text: 'Madrid' }, {...}, {..}]
-      byCategories: [], // byCategories:  [{value: 'garaje', text: 'Garaje' }, {...}, {..}]
+      byId: {}
       /* 
       madrid: [],
       barcelona: [],
@@ -47,6 +48,9 @@ export const houseSlice = createSlice({
       .filter(key => state.housesList.byId[key].city === action.payload)
       .map(id => +id)
     },
+    loadMore: (state, action) => {
+      state.currentPage = action.payload
+    }
   },
   extraReducers: builder => {
     builder
@@ -100,6 +104,6 @@ export const houseSlice = createSlice({
 const { actions, reducer } = houseSlice
 
 // Action creators are generated for each case reducer function
-export const { selectCategory, selectCity } = actions
+export const { selectCategory, selectCity, loadMore } = actions
 
 export default reducer
