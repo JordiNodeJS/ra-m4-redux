@@ -51,7 +51,7 @@ export const houseSlice = createSlice({
       .map(id => +id)
     },
     loadMore: (state, action) => {
-      state.currentPage = action.payload
+      state.page = action.payload + 1
     }
   },
   extraReducers: builder => {
