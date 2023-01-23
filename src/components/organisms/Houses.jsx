@@ -1,41 +1,65 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-console */
 import { useEffect, useState } from 'react'
-import styled from 'styled-components'
 import { useDispatch, useSelector } from 'react-redux'
+import styled from 'styled-components'
 import { Button } from '../atoms'
 import { HouseCard } from '../molecules'
 import { FlexBox, Grid } from '../../styles'
-import { getHouses } from '../../store/slices/houseSlice'
+import { getHouses, loadMore } from '../../store/slices/houseSlice'
 
 const HousesStyled = styled(FlexBox)``
 
 function Houses() {
   const [houses, setHouses] = useState([])
-  const [currentPage, setCurrentPage] = useState(1)
-  const {
-    housesList: { byId: data },
-    reqStatus,
-  } = useSelector(state => state.houses)
 
+  const { categorySelected, housesList, reqStatus } = useSelector(state => state.houses)
+  const { byId, allIds, page } = housesList
+  const category = housesList[categorySelected] ? [...housesList[categorySelected]] : []
+
+  const currentPage = page || 1
+  
   const dispatch = useDispatch()
   useEffect(() => {
     dispatch(getHouses())
   }, [dispatch])
-  
+   
   const ITEMS_PER_PAGE = 9
-  const totalPages = data ? Math.ceil(Object.values(data).length / ITEMS_PER_PAGE) : 0
+  const totalPages = allIds
+  ? Math.ceil(allIds.length / ITEMS_PER_PAGE)
+  : 0
 
+  
   const startLoading = page => {
     const startIndex = (page - 1) * ITEMS_PER_PAGE
-    const endIndex = page * 9
-    const pisos = Object.values(data).slice(startIndex, endIndex)
+    const endIndex = page * ITEMS_PER_PAGE
+    
+    let data = allIds.map(key => byId[key])
+    console.log('🥒', data)
+    console.log('housesList[categorySelected]', housesList[categorySelected])
+    if (housesList[categorySelected]?.length !== 0) {
+      data = category.map(key => byId[key])
+      console.log('🏘 category', categorySelected, category)
+      console.log('🐒 data category', data)
+    }
+    // if (housesList[categorySelected] === 'all') {
+    //   console.log('🏘 category', categorySelected, category)
+    //   console.log('🐒 data category', data)
+    //   data = allIds.map(key => byId[key])
+    // }
+    console.log('data after if', data)
+    const pisos = data.slice(startIndex, endIndex)
+    console.log('pisos', pisos)
     setHouses(pisos)
   }
 
   useEffect(() => {
-    if (data) startLoading(currentPage)
-  }, [data, currentPage])
+    console.log('startLoading', currentPage )
+    if (currentPage) startLoading(currentPage)
+  }, [allIds, categorySelected, currentPage])
+
+  const handleClick = () => dispatch(loadMore(currentPage + 1))
+
 
   return (
     <HousesStyled>
@@ -57,8 +81,8 @@ function Houses() {
       <FlexBox align="center">
         <Button
           style={{ marginTop: '2rem' }}
-          onClick={() => setCurrentPage(currentPage + 1)}
-          disabled={currentPage >= totalPages}
+          onClick={handleClick}
+          // disabled={currentPage >= totalPages}
         >
           Load more
         </Button>
