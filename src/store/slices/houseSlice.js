@@ -35,11 +35,13 @@ export const houseSlice = createSlice({
   },
   reducers: {
     selectCategory: (state, action) => {
-      state.categorySelected = action.payload
-
-      state.housesList[action.payload] = Object.entries(state.housesList.byId)
+      state.categorySelected = action.payload // <-- category
+      if (action.payload !== 'allIds') {
+              state.housesList[action.payload] = Object.entries(state.housesList.byId)
       .filter(([, house]) => house.type === action.payload)
       .map(([id]) => +id)
+      }
+
     },
     selectCity: (state, action) => {
       state.citySelected = action.payload
@@ -81,23 +83,28 @@ export const houseSlice = createSlice({
           }
 
           // CATEGORIES 🏡🏰
-          state.housesList.byCategories.push({
-            value: type,
-            text: type.charAt(0).toUpperCase() + type.slice(1),
+          const isCategory = state.housesList.byCategories.find(c => c.value === type)
+          if (!isCategory) {
+            state.housesList.byCategories.push({
+              value: type,
+              text: type.charAt(0).toUpperCase() + type.slice(1),
           })
+          }
+          state.housesList.byId[id] = house
+
         })
 
         // UNIQUE CITIES 👇
         // state.housesList.byCities = removeDuplicates(state.housesList.byCities)
 
         // UNIQUE CATEGORIES 👇
-        state.housesList.byCategories = removeDuplicates(
-          state.housesList.byCategories,
-        )
+        // state.housesList.byCategories = removeDuplicates(
+        //   state.housesList.byCategories,
+        // )
         // create states base on categories
-        state.housesList.byCategories.forEach(category => {
-         if (category.value !== 'allIds' ) state.housesList[category.value] = [] 
-        })
+        // state.housesList.byCategories.forEach(category => {
+        //  if (category.value !== 'allIds' ) state.housesList[category.value] = [] 
+        // })
         
       })
   },

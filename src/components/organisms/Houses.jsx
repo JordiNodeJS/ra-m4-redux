@@ -37,16 +37,18 @@ function Houses() {
     let data = allIds.map(key => byId[key])
     console.log('🥒', data)
     console.log('housesList[categorySelected]', housesList[categorySelected])
-    if (Array.isArray(housesList[categorySelected]) && housesList[categorySelected].length) {
+    if (Array.isArray(housesList[categorySelected]) && housesList[categorySelected].length ) {
+      if (housesList[categorySelected] === 'allIds') {
+        console.log('🏘 🧨 category', categorySelected, category)
+        console.log('🧨 data category', data)
+        data = allIds.map(key => byId[key])
+        return
+      }
       data = category.map(key => byId[key])
       console.log('🏘 category', categorySelected, category)
       console.log('🐒 data category', data)
     }
-    // if (housesList[categorySelected] === 'all') {
-    //   console.log('🏘 category', categorySelected, category)
-    //   console.log('🐒 data category', data)
-    //   data = allIds.map(key => byId[key])
-    // }
+
     console.log('data after if', data)
     const pisos = data.slice(startIndex, endIndex)
     console.log('pisos', pisos)
