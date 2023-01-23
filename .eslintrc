@@ -9,6 +9,9 @@
     "react/require-default-props": "off",
     "react/react-in-jsx-scope": "off",
     "react/jsx-props-no-spreading": "off",
-    "no-param-reassign": ["error", { "props": false }]
+    "no-param-reassign": ["error", { "props": false }],
+    "no-unused-expressions":  [
+      "error", { "allowTernary": true, "allowShortCircuit": true }
+    ]
   }
 }

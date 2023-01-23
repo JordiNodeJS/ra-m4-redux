@@ -40,7 +40,7 @@ export const houseSlice = createSlice({
           .filter(([, house]) => house.type === action.payload)
           .map(([id]) => +id)
       }
-      if (state.categorySelected === 'allIds') state.page = 1
+      state.categorySelected === 'allIds' && (state.page = 1)
     },
     selectCity: (state, action) => {
       state.citySelected = action.payload
