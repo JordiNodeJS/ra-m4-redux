@@ -37,7 +37,7 @@ function Houses() {
     let data = allIds.map(key => byId[key])
     console.log('🥒', data)
     console.log('housesList[categorySelected]', housesList[categorySelected])
-    if (housesList[categorySelected]?.length !== 0) {
+    if (Array.isArray(housesList[categorySelected]) && housesList[categorySelected].length) {
       data = category.map(key => byId[key])
       console.log('🏘 category', categorySelected, category)
       console.log('🐒 data category', data)
