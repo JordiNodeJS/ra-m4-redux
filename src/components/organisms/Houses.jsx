@@ -32,27 +32,31 @@ function Houses() {
 
   
   const startLoading = (p = 1) => {
-    const startIndex = (p - 1) * ITEMS_PER_PAGE
-    const endIndex = p * ITEMS_PER_PAGE
+
     
     let data = allIds.map(key => byId[key])
     console.log('🥒', data)
     console.log('housesList[categorySelected]', housesList[categorySelected])
     if (Array.isArray(housesList[categorySelected]) && housesList[categorySelected].length ) {
-      // if (housesList[categorySelected] === 'allIds') {
-      //   console.log('🏘 🧨 category', categorySelected, category)
-      //   console.log('🧨 data category', data)
-      //   data = allIds.map(key => byId[key])
-      //   return
-      // }
       data = category.map(key => byId[key])
       console.log('🏘 category', categorySelected, category)
       console.log('🐒 data category', data)
     }
 
     console.log('data after if', data)
-    console.log('start', startIndex, 'end', endIndex)
-    const pisos = (data.length >= ITEMS_PER_PAGE) ? data.slice(startIndex, endIndex) : data
+    // console.log('length', data.length, 'start', startIndex, 'end', endIndex)
+
+    let pisos
+
+    if (data.length >= ITEMS_PER_PAGE) {
+      const startIndex = (p - 1) * ITEMS_PER_PAGE
+      const endIndex = p * ITEMS_PER_PAGE
+      pisos =  data.slice(startIndex, endIndex)
+    } else {
+      pisos = data
+    }
+
+    // const pisos = (data.length >= ITEMS_PER_PAGE) ? data.slice(startIndex, endIndex) : data
     console.log('pisos', pisos)
     setHouses(pisos)
   }

@@ -41,7 +41,7 @@ export const houseSlice = createSlice({
           .filter(([, house]) => house.type === action.payload)
           .map(([id]) => +id)
       }
-
+      if (state.categorySelected === 'allIds') state.page = 1
     },
     selectCity: (state, action) => {
       state.citySelected = action.payload
@@ -51,7 +51,7 @@ export const houseSlice = createSlice({
       .map(id => +id)
     },
     loadMore: (state, action) => {
-      state.page = action.payload + 1
+      state.page = +action.payload + 1
     }
   },
   extraReducers: builder => {
