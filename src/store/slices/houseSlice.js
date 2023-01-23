@@ -37,9 +37,9 @@ export const houseSlice = createSlice({
     selectCategory: (state, action) => {
       state.categorySelected = action.payload // <-- category
       if (action.payload !== 'allIds') {
-              state.housesList[action.payload] = Object.entries(state.housesList.byId)
-      .filter(([, house]) => house.type === action.payload)
-      .map(([id]) => +id)
+      state.housesList[action.payload] = Object.entries(state.housesList.byId)
+        .filter(([, house]) => house.type === action.payload)
+        .map(([id]) => +id)
       }
 
     },
