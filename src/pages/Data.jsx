@@ -12,10 +12,6 @@ function Data() {
     dispatch(getHouses())
   }, [dispatch])
 
-  useEffect(() => {
-    console.log('houses', byId)
-  }, [byId])
-
   const renderHouses = Object.values(byId).map(house => (
     <li key={house.id}>
       {house.title} <img src={house.image} alt={house.title} width={20} />
