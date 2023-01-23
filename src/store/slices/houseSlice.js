@@ -2,7 +2,6 @@
 
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { urls } from '../../constants'
-import { removeDuplicates } from './utils'
 
 // thunks
 export const getHouses = createAsyncThunk('houses/getHouses', async () => {
@@ -94,10 +93,10 @@ export const houseSlice = createSlice({
 
         })
 
-        // UNIQUE CITIES 👇
+        // UNIQUE CITIES 
         // state.housesList.byCities = removeDuplicates(state.housesList.byCities)
 
-        // UNIQUE CATEGORIES 👇
+        // UNIQUE CATEGORIES 
         // state.housesList.byCategories = removeDuplicates(
         //   state.housesList.byCategories,
         // )
