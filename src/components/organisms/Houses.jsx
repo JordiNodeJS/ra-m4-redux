@@ -51,7 +51,8 @@ function Houses() {
     }
 
     console.log('data after if', data)
-    const pisos = data.slice(startIndex, endIndex)
+    console.log('start', startIndex, 'end', endIndex)
+    const pisos = (data.length >= ITEMS_PER_PAGE) ? data.slice(startIndex, endIndex) : data
     console.log('pisos', pisos)
     setHouses(pisos)
   }
@@ -85,7 +86,7 @@ function Houses() {
         <Button
           style={{ marginTop: '2rem' }}
           onClick={handleClick}
-          // disabled={currentPage >= totalPages}
+          disabled={page >= totalPages}
         >
           Load more
         </Button>
