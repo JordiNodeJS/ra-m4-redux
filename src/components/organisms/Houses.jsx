@@ -45,24 +45,13 @@ function Houses() {
 
     console.log('data after if', data)
 
-    // let pisos
-
-    // if (data.length >= ITEMS_PER_PAGE) {
-    //   const startIndex = (p - 1) * ITEMS_PER_PAGE
-    //   const endIndex = p * ITEMS_PER_PAGE
-    //   pisos =  data.slice(startIndex, endIndex)
-    // } else {
-    //   pisos = data
-    // }
-
     let pisos
     const { length } = data
   
     length >= ITEMS_PER_PAGE
-      ? ([pisos] = [data.slice((p - 1) * ITEMS_PER_PAGE, p * ITEMS_PER_PAGE)])
-      : ([pisos] = [data])
+      ? pisos = data.slice((p - 1) * ITEMS_PER_PAGE, p * ITEMS_PER_PAGE)
+      : pisos = data
 
-    // const pisos = (data.length >= ITEMS_PER_PAGE) ? data.slice(startIndex, endIndex) : data
     console.log('pisos', pisos)
     setHouses(pisos)
   }
