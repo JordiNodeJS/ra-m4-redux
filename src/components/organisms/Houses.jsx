@@ -20,6 +20,7 @@ function Houses() {
     page,
   } = useSelector(state => state.houses)
 
+  //   Este hook es innecesario, lo datos y estados ya vienen de redux
   const { houses, startLoading } = useStartLoading()
 
   const dispatch = useDispatch()
@@ -48,6 +49,7 @@ function Houses() {
       {reqStatus === 'failed' && <div>Error</div>}
       {reqStatus === 'success' && (
         <Grid gridGap="32px">
+          {/* Deberías de filtrar aquí */}
           {houses.map(house => (
             <HouseCard
               key={house.id}
