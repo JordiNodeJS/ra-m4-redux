@@ -63,12 +63,11 @@ export const houseSlice = createSlice({
       .addCase(getHouses.rejected, state => {
         state.reqStatus = 'failed'
       })
-      .addCase(getHouses.fulfilled, (state, action) => {
+      .addCase(getHouses.fulfilled, (state, action) => { // <-- houses from the API arrive here
         state.reqStatus = 'success'
 
-        action.payload.forEach(house => {
-          const { id, city, type } = house
-          state.housesList.byId[id] = house
+        action.payload.forEach(house => { // <-- for each individual house we do the next things
+          const { id, city, type: category } = house
 
           if (!state.housesList.allIds.includes(id)) {
             state.housesList.allIds.push(id)
@@ -84,29 +83,17 @@ export const houseSlice = createSlice({
           }
 
           // CATEGORIES 🏡🏰
-          const isCategory = state.housesList.byCategories.find(c => c.value === type)
+          const isCategory = state.housesList.byCategories.find(c => c.value === category)
           if (!isCategory) {
             state.housesList.byCategories.push({
-              value: type,
-              text: type.charAt(0).toUpperCase() + type.slice(1),
+              value: category,
+              text: category.charAt(0).toUpperCase() + category.slice(1),
           })
           }
           state.housesList.byId[id] = house
 
         })
 
-        // UNIQUE CITIES 
-        // state.housesList.byCities = removeDuplicates(state.housesList.byCities)
-
-        // UNIQUE CATEGORIES 
-        // state.housesList.byCategories = removeDuplicates(
-        //   state.housesList.byCategories,
-        // )
-        // create states base on categories
-        // state.housesList.byCategories.forEach(category => {
-        //  if (category.value !== 'allIds' ) state.housesList[category.value] = [] 
-        // })
-        
       })
   },
 })
