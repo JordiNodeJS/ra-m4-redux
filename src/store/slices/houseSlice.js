@@ -94,18 +94,6 @@ export const houseSlice = createSlice({
 
         })
 
-        // UNIQUE CITIES 
-        // state.housesList.byCities = removeDuplicates(state.housesList.byCities)
-
-        // UNIQUE CATEGORIES 
-        // state.housesList.byCategories = removeDuplicates(
-        //   state.housesList.byCategories,
-        // )
-        // create states base on categories
-        // state.housesList.byCategories.forEach(category => {
-        //  if (category.value !== 'allIds' ) state.housesList[category.value] = [] 
-        // })
-        
       })
   },
 })
