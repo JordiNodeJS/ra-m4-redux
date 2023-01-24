@@ -1,68 +1,45 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-console */
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components'
 import { Button } from '../atoms'
 import { HouseCard } from '../molecules'
 import { FlexBox, Grid } from '../../styles'
 import { getHouses, loadMore } from '../../store/slices/houseSlice'
+import { useStartLoading } from '../../hooks'
 
 const HousesStyled = styled(FlexBox)``
 
 function Houses() {
-  const [houses, setHouses] = useState([])
-  
-  const { categorySelected, housesList, reqStatus, page } = useSelector(state => state.houses)
-  const { byId, allIds } = housesList
-  const category = housesList[categorySelected] ? [...housesList[categorySelected]] : []
-  
+  const {
+    housesList: { allIds },
+    categorySelected,
+    reqStatus,
+    page,
+  } = useSelector(state => state.houses)
 
- 
-  
+  const { houses, startLoading } = useStartLoading()
+
   const dispatch = useDispatch()
   useEffect(() => {
     dispatch(getHouses())
   }, [dispatch])
-   
-  const ITEMS_PER_PAGE = 9
-  const totalPages = allIds
-  ? Math.ceil(allIds.length / ITEMS_PER_PAGE)
-  : 0
 
-  
-  const startLoading = (p = 1) => {
+  // pagination
+  const isDisabled = () => {
+    const ITEMS_PER_PAGE = 9
+    const totalPages = allIds ? Math.ceil(allIds.length / ITEMS_PER_PAGE) : 0
 
-    
-    let data = allIds.map(key => byId[key])
-    console.log('🥒', data)
-    console.log('housesList[categorySelected]', housesList[categorySelected])
-    if (Array.isArray(housesList[categorySelected]) && housesList[categorySelected].length ) {
-      data = category.map(key => byId[key])
-      console.log('🏘 category', categorySelected, category)
-      console.log('🐒 data category', data)
-    }
-
-    console.log('data after if', data)
-
-    let pisos
-    const { length } = data
-  
-    length >= ITEMS_PER_PAGE
-      ? pisos = data.slice((p - 1) * ITEMS_PER_PAGE, p * ITEMS_PER_PAGE)
-      : pisos = data
-
-    console.log('pisos', pisos)
-    setHouses(pisos)
+    return page >= totalPages
   }
 
   useEffect(() => {
-    console.log('startLoading', page )
+    console.log('startLoading', page)
     startLoading(page)
   }, [allIds, categorySelected, page])
 
   const handleClick = () => dispatch(loadMore(page))
-
 
   return (
     <HousesStyled>
@@ -85,7 +62,7 @@ function Houses() {
         <Button
           style={{ marginTop: '2rem' }}
           onClick={handleClick}
-          disabled={page >= totalPages}
+          disabled={isDisabled()}
         >
           Load more
         </Button>
