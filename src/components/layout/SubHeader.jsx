@@ -44,14 +44,15 @@ function SubHeader({ ...props }) {
     dispatch(getHouses())
   }, [dispatch])
 
-  useEffect(() => {
-    dispatch(selectCategory(''))
+  // handlers
+  const handleChangeCategory = e => {
+    dispatch(selectCategory(e.target.value))
     dispatch(selectCity(''))
-  }, [dispatch])
-
-  // handles
-  const handleChangeCategory = e => dispatch(selectCategory(e.target.value))
-  const handleChangeCity = e => dispatch(selectCity(e.target.value))
+  }
+  const handleChangeCity = e => {
+    dispatch(selectCity(e.target.value))
+    dispatch(selectCategory(''))
+  }
 
   return (
     <SubHeaderStyled {...props}>
