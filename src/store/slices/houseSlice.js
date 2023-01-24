@@ -2,7 +2,6 @@
 
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { urls } from '../../constants'
-import { removeDuplicates } from './utils'
 
 // thunks
 export const getHouses = createAsyncThunk('houses/getHouses', async () => {
@@ -41,17 +40,19 @@ export const houseSlice = createSlice({
           .filter(([, house]) => house.type === action.payload)
           .map(([id]) => +id)
       }
-
+      state.categorySelected === 'allIds' && (state.page = 1)
     },
     selectCity: (state, action) => {
-      state.citySelected = action.payload
-
-      state.housesList[action.payload] = Object.keys(state.housesList.byId)
-      .filter(key => state.housesList.byId[key].city === action.payload)
-      .map(id => +id)
+      state.citySelected = action.payload // <-- city
+      if (action.payload !== 'allIds') {
+        state.housesList[action.payload] = Object.keys(state.housesList.byId)
+          .filter(key => state.housesList.byId[key].city === action.payload)
+          .map(id => +id)
+      }
+      state.categorySelected === 'allIds' && (state.page = 1)
     },
     loadMore: (state, action) => {
-      state.page = action.payload + 1
+      state.page = +action.payload + 1
     }
   },
   extraReducers: builder => {
@@ -94,10 +95,10 @@ export const houseSlice = createSlice({
 
         })
 
-        // UNIQUE CITIES 👇
+        // UNIQUE CITIES 
         // state.housesList.byCities = removeDuplicates(state.housesList.byCities)
 
-        // UNIQUE CATEGORIES 👇
+        // UNIQUE CATEGORIES 
         // state.housesList.byCategories = removeDuplicates(
         //   state.housesList.byCategories,
         // )

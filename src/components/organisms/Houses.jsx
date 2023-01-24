@@ -1,68 +1,46 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-console */
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components'
 import { Button } from '../atoms'
 import { HouseCard } from '../molecules'
 import { FlexBox, Grid } from '../../styles'
 import { getHouses, loadMore } from '../../store/slices/houseSlice'
+import { useStartLoading } from '../../hooks'
 
 const HousesStyled = styled(FlexBox)``
 
 function Houses() {
-  const [houses, setHouses] = useState([])
-  
-  const { categorySelected, housesList, reqStatus, page } = useSelector(state => state.houses)
-  const { byId, allIds } = housesList
-  const category = housesList[categorySelected] ? [...housesList[categorySelected]] : []
-  
+  const {
+    housesList: { allIds },
+    categorySelected,
+    citySelected,
+    reqStatus,
+    page,
+  } = useSelector(state => state.houses)
 
- 
-  
+  const { houses, startLoading } = useStartLoading()
+
   const dispatch = useDispatch()
   useEffect(() => {
     dispatch(getHouses())
   }, [dispatch])
-   
-  const ITEMS_PER_PAGE = 9
-  const totalPages = allIds
-  ? Math.ceil(allIds.length / ITEMS_PER_PAGE)
-  : 0
 
-  
-  const startLoading = (p = 1) => {
-    const startIndex = (p - 1) * ITEMS_PER_PAGE
-    const endIndex = p * ITEMS_PER_PAGE
-    
-    let data = allIds.map(key => byId[key])
-    console.log('🥒', data)
-    console.log('housesList[categorySelected]', housesList[categorySelected])
-    if (Array.isArray(housesList[categorySelected]) && housesList[categorySelected].length ) {
-      // if (housesList[categorySelected] === 'allIds') {
-      //   console.log('🏘 🧨 category', categorySelected, category)
-      //   console.log('🧨 data category', data)
-      //   data = allIds.map(key => byId[key])
-      //   return
-      // }
-      data = category.map(key => byId[key])
-      console.log('🏘 category', categorySelected, category)
-      console.log('🐒 data category', data)
-    }
+  // pagination
+  const isDisabled = () => {
+    const ITEMS_PER_PAGE = 9
+    const totalPages = allIds ? Math.ceil(allIds.length / ITEMS_PER_PAGE) : 0
 
-    console.log('data after if', data)
-    const pisos = data.slice(startIndex, endIndex)
-    console.log('pisos', pisos)
-    setHouses(pisos)
+    return page >= totalPages
   }
 
   useEffect(() => {
-    console.log('startLoading', page )
+    console.log('startLoading', page)
     startLoading(page)
-  }, [allIds, categorySelected, page])
+  }, [allIds, categorySelected, citySelected, page])
 
   const handleClick = () => dispatch(loadMore(page))
-
 
   return (
     <HousesStyled>
@@ -85,7 +63,7 @@ function Houses() {
         <Button
           style={{ marginTop: '2rem' }}
           onClick={handleClick}
-          // disabled={currentPage >= totalPages}
+          disabled={isDisabled()}
         >
           Load more
         </Button>
