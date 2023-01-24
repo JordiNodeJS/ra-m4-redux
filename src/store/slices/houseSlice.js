@@ -43,11 +43,13 @@ export const houseSlice = createSlice({
       state.categorySelected === 'allIds' && (state.page = 1)
     },
     selectCity: (state, action) => {
-      state.citySelected = action.payload
-
-      state.housesList[action.payload] = Object.keys(state.housesList.byId)
-      .filter(key => state.housesList.byId[key].city === action.payload)
-      .map(id => +id)
+      state.citySelected = action.payload // <-- city
+      if (action.payload !== 'allIds') {
+        state.housesList[action.payload] = Object.keys(state.housesList.byId)
+          .filter(key => state.housesList.byId[key].city === action.payload)
+          .map(id => +id)
+      }
+      state.categorySelected === 'allIds' && (state.page = 1)
     },
     loadMore: (state, action) => {
       state.page = +action.payload + 1

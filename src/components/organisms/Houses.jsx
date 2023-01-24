@@ -15,6 +15,7 @@ function Houses() {
   const {
     housesList: { allIds },
     categorySelected,
+    citySelected,
     reqStatus,
     page,
   } = useSelector(state => state.houses)
@@ -37,7 +38,7 @@ function Houses() {
   useEffect(() => {
     console.log('startLoading', page)
     startLoading(page)
-  }, [allIds, categorySelected, page])
+  }, [allIds, categorySelected, citySelected, page])
 
   const handleClick = () => dispatch(loadMore(page))
 
