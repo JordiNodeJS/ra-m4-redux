@@ -1,10 +1,11 @@
+/* eslint-disable no-console */
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components'
 import {
   getHouses,
   setCategory,
-  selectCity,
+  setCity,
 } from '../../store/slices/houseSlice'
 import { colors, Container, dimensions, FlexBox } from '../../styles'
 import { Button, Icon } from '../atoms'
@@ -47,11 +48,12 @@ function SubHeader({ ...props }) {
   // handlers
   const handleChangeCategory = e => {
     dispatch(setCategory(e.target.value))
-    dispatch(selectCity(''))
+    dispatch(setCity(''))
   }
   const handleChangeCity = e => {
-    dispatch(selectCity(e.target.value))
-    dispatch(setCategory(''))
+    dispatch(setCity(e.target.value))
+    console.log('all', categorySelected)
+    dispatch(setCategory('allIds'))
   }
 
   return (
