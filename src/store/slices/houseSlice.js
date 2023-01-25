@@ -18,10 +18,10 @@ export const houseSlice = createSlice({
     categorySelected: '',
     citySelected: '',
     housesList: {
-      byCities: [{value: 'allIds', text: 'All'}], //  byCities: [{value: 'madrid', text: 'Madrid' }, {...}, {..}]
-      byCategories: [{value: 'allIds', text: 'All'}], // byCategories:  [{value: 'garaje', text: 'Garaje' }, {...}, {..}]
+      byCities: [{ value: 'allIds', text: 'All' }], //  byCities: [{value: 'madrid', text: 'Madrid' }, {...}, {..}]
+      byCategories: [{ value: 'allIds', text: 'All' }], // byCategories:  [{value: 'garaje', text: 'Garaje' }, {...}, {..}]
       allIds: [],
-      byId: {}/*  {
+      byId: {} /*  {
                     1: {
                       id: 1,
                       title: 'Piso 1',
@@ -30,7 +30,7 @@ export const houseSlice = createSlice({
                       id: 2,
                       title: 'Piso 2',
                     },
-                  } */
+                  } */,
       /* 
       madrid: [],
       barcelona: [],
@@ -47,7 +47,7 @@ export const houseSlice = createSlice({
     },
     setCity: (state, action) => {
       state.citySelected = action.payload // <-- city
-    }
+    },
   },
   extraReducers: builder => {
     builder
@@ -57,10 +57,12 @@ export const houseSlice = createSlice({
       .addCase(getHouses.rejected, state => {
         state.reqStatus = 'failed'
       })
-      .addCase(getHouses.fulfilled, (state, action) => { // <-- houses from the API arrive here
+      .addCase(getHouses.fulfilled, (state, action) => {
+        // <-- houses from the API arrive here
         state.reqStatus = 'success'
 
-        action.payload.forEach(house => { // <-- for each individual house we do the next things
+        action.payload.forEach(house => {
+          // <-- for each individual house we do the next things
           const { id, city, type: category } = house
 
           if (!state.housesList.allIds.includes(id)) {
@@ -77,17 +79,17 @@ export const houseSlice = createSlice({
           }
 
           // CATEGORIES 🏡🏰
-          const isCategory = state.housesList.byCategories.find(c => c.value === category)
+          const isCategory = state.housesList.byCategories.find(
+            c => c.value === category,
+          )
           if (!isCategory) {
             state.housesList.byCategories.push({
               value: category,
               text: category.charAt(0).toUpperCase() + category.slice(1),
-          })
+            })
           }
           state.housesList.byId[id] = house
-
         })
-
       })
   },
 })
