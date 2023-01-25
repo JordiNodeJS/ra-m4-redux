@@ -44,21 +44,9 @@ export const houseSlice = createSlice({
   reducers: {
     setCategory: (state, action) => {
       state.categorySelected = action.payload // <-- category
-      if (action.payload !== 'allIds') {
-        state.housesList[action.payload] = Object.entries(state.housesList.byId)
-          .filter(([, house]) => house.type === action.payload)
-          .map(([id]) => +id)
-      }
-      state.categorySelected === 'allIds' && (state.page = 1)
     },
     setCity: (state, action) => {
       state.citySelected = action.payload // <-- city
-      if (action.payload !== 'allIds') {
-        state.housesList[action.payload] = Object.keys(state.housesList.byId)
-          .filter(key => state.housesList.byId[key].city === action.payload)
-          .map(id => +id)
-      }
-      state.categorySelected === 'allIds' && (state.page = 1)
     }
   },
   extraReducers: builder => {
