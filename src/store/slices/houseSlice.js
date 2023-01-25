@@ -33,7 +33,7 @@ export const houseSlice = createSlice({
     },
   },
   reducers: {
-    selectCategory: (state, action) => {
+    setCategory: (state, action) => {
       state.categorySelected = action.payload // <-- category
       if (action.payload !== 'allIds') {
         state.housesList[action.payload] = Object.entries(state.housesList.byId)
@@ -101,6 +101,6 @@ export const houseSlice = createSlice({
 const { actions, reducer } = houseSlice
 
 // Action creators are generated for each case reducer function
-export const { selectCategory, selectCity, loadMore } = actions
+export const { setCategory, selectCity, loadMore } = actions
 
 export default reducer

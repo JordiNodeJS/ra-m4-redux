@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components'
 import {
   getHouses,
-  selectCategory,
+  setCategory,
   selectCity,
 } from '../../store/slices/houseSlice'
 import { colors, Container, dimensions, FlexBox } from '../../styles'
@@ -46,12 +46,12 @@ function SubHeader({ ...props }) {
 
   // handlers
   const handleChangeCategory = e => {
-    dispatch(selectCategory(e.target.value))
+    dispatch(setCategory(e.target.value))
     dispatch(selectCity(''))
   }
   const handleChangeCity = e => {
     dispatch(selectCity(e.target.value))
-    dispatch(selectCategory(''))
+    dispatch(setCategory(''))
   }
 
   return (
