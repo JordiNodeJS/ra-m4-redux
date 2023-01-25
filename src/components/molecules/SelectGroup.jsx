@@ -11,6 +11,7 @@ function SelectGroup({
   options = [],
   value = '',
   defaultText = '',
+  defaultValue,
   hideLabel = false,
   ...rest
 }) {
@@ -24,7 +25,7 @@ function SelectGroup({
           {defaultText}
         </SelectOption>
         {options.map(option => (
-          <SelectOption value={option.value} key={option.value}>
+          <SelectOption defaultValue={defaultValue === option.value ? defaultValue : ''} value={option.value} key={option.value}>
             {option.text}
           </SelectOption>
         ))}
@@ -45,6 +46,7 @@ SelectGroup.propTypes = {
   ),
   value: PropTypes.string,
   defaultText: PropTypes.string,
+  defaultValue: PropTypes.string,
   hideLabel: PropTypes.bool,
 }
 

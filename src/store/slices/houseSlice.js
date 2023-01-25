@@ -21,7 +21,16 @@ export const houseSlice = createSlice({
       byCities: [{value: 'allIds', text: 'All'}], //  byCities: [{value: 'madrid', text: 'Madrid' }, {...}, {..}]
       byCategories: [{value: 'allIds', text: 'All'}], // byCategories:  [{value: 'garaje', text: 'Garaje' }, {...}, {..}]
       allIds: [],
-      byId: {}
+      byId: {}/*  {
+                    1: {
+                      id: 1,
+                      title: 'Piso 1',
+                    },
+                    2: {
+                      id: 2,
+                      title: 'Piso 2',
+                    },
+                  } */
       /* 
       madrid: [],
       barcelona: [],
@@ -42,7 +51,7 @@ export const houseSlice = createSlice({
       }
       state.categorySelected === 'allIds' && (state.page = 1)
     },
-    selectCity: (state, action) => {
+    setCity: (state, action) => {
       state.citySelected = action.payload // <-- city
       if (action.payload !== 'allIds') {
         state.housesList[action.payload] = Object.keys(state.housesList.byId)
@@ -50,9 +59,6 @@ export const houseSlice = createSlice({
           .map(id => +id)
       }
       state.categorySelected === 'allIds' && (state.page = 1)
-    },
-    loadMore: (state, action) => {
-      state.page = +action.payload + 1
     }
   },
   extraReducers: builder => {
@@ -101,6 +107,6 @@ export const houseSlice = createSlice({
 const { actions, reducer } = houseSlice
 
 // Action creators are generated for each case reducer function
-export const { setCategory, selectCity, loadMore } = actions
+export const { setCategory, setCity, loadMore } = actions
 
 export default reducer
