@@ -1,10 +1,11 @@
+/* eslint-disable default-param-last */
 // @filename: userSlice.js
 
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { urls } from '../../constants'
 
 // thunks
-export const getHouses = createAsyncThunk('houses/getHouses', async (name, { rejectWithValue }) => {
+export const getHouses = createAsyncThunk('houses/getHouses', async (name = '', { rejectWithValue }) => {
   const res = await fetch( `${urls.houses}/${name}`)
   const data = await res.json()
   if (res.status < 200 || res.status >= 300) {
