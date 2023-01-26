@@ -22,5 +22,5 @@ export const filterHouses = (byId, selection, payload) =>
 
 export const getFilteredByIds = (byId, filterArray = []) => 
   Object.values(byId)
-    .filter(item => filterArray.length === 0 || filterArray.map(Number).includes(item.id))
+    .filter(({id}) => filterArray.length === 0 || filterArray.map(Number).includes(id))
     .sort((a, b) => a.id - b.id);
