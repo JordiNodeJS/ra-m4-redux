@@ -5,14 +5,18 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { urls } from '../../constants'
 
 // thunks
-export const getHouses = createAsyncThunk('houses/getHouses', async (name = '', { rejectWithValue }) => {
-  const res = await fetch( `${urls.houses}/${name}`)
-  const data = await res.json()
-  if (res.status < 200 || res.status >= 300) {
-    return rejectWithValue(data)
-  }
-  return data
-})
+// Continuas sin pasar parametros
+export const getHouses = createAsyncThunk(
+  'houses/getHouses',
+  async (name = '', { rejectWithValue }) => {
+    const res = await fetch(`${urls.houses}/${name}`)
+    const data = await res.json()
+    if (res.status < 200 || res.status >= 300) {
+      return rejectWithValue(data)
+    }
+    return data
+  },
+)
 
 export const houseSlice = createSlice({
   name: 'houses',
@@ -34,7 +38,7 @@ export const houseSlice = createSlice({
                       id: 2,
                       title: 'Piso 2',
                     },
-                  } */
+                  } */,
     },
   },
   reducers: {

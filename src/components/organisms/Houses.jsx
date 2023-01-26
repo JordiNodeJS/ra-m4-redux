@@ -32,6 +32,7 @@ function Houses() {
     return page >= totalPages
   }
 
+  //   Esta función es innecesaria
   const slicePage = (_allHouses, p) => {
     const { length } = _allHouses
 
@@ -46,6 +47,7 @@ function Houses() {
     setHouses(pisos)
   }
 
+  //  Continuas sin usar el loadMore pasando parametros al thunk
   useEffect(() => {
     slicePage(allHouses(byId), page)
   }, [byId, page])
@@ -58,10 +60,12 @@ function Houses() {
     dispatch(getHouses())
   }, [dispatch])
 
+  //   Ambos useEffect son innecesarios, deberías de filtrar abajo como se indico en la anterior review
   useEffect(() => {
     setHouses(categoryHouses({ byId, category }))
   }, [category])
 
+  //   Ambos useEffect son innecesarios, deberías de filtrar abajo como se indico en la anterior review
   useEffect(() => {
     setHouses(cityHouses({ byId, city }))
   }, [city])
@@ -72,6 +76,7 @@ function Houses() {
       {reqStatus === 'failed' && <div>Error</div>}
       {reqStatus === 'success' && (
         <Grid gridGap="32px">
+          {/* Continuas sin filtrar aquí. */}
           {houses.map(house => (
             <HouseCard
               key={house.id}
