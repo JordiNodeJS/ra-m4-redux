@@ -1,12 +1,16 @@
+/* eslint-disable default-param-last */
 // @filename: userSlice.js
 
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { urls } from '../../constants'
 
 // thunks
-export const getHouses = createAsyncThunk('houses/getHouses', async () => {
-  const res = await fetch(urls.houses)
+export const getHouses = createAsyncThunk('houses/getHouses', async (name = '', { rejectWithValue }) => {
+  const res = await fetch( `${urls.houses}/${name}`)
   const data = await res.json()
+  if (res.status < 200 || res.status >= 300) {
+    return rejectWithValue(data)
+  }
   return data
 })
 
@@ -18,10 +22,10 @@ export const houseSlice = createSlice({
     categorySelected: '',
     citySelected: '',
     housesList: {
-      byCities: [{value: 'allIds', text: 'All'}], //  byCities: [{value: 'madrid', text: 'Madrid' }, {...}, {..}]
-      byCategories: [{value: 'allIds', text: 'All'}], // byCategories:  [{value: 'garaje', text: 'Garaje' }, {...}, {..}]
+      byCities: [{ value: 'allIds', text: 'All' }], //  byCities: [{value: 'madrid', text: 'Madrid' }, {...}, {..}]
+      byCategories: [{ value: 'allIds', text: 'All' }], // byCategories:  [{value: 'garaje', text: 'Garaje' }, {...}, {..}]
       allIds: [],
-      byId: {}/*  {
+      byId: {} /*  {
                     1: {
                       id: 1,
                       title: 'Piso 1',
@@ -31,35 +35,15 @@ export const houseSlice = createSlice({
                       title: 'Piso 2',
                     },
                   } */
-      /* 
-      madrid: [],
-      barcelona: [],
-      zaragoza: [],
-      garaje: [],
-      chalets: [],
-      piso: []
-      */
     },
   },
   reducers: {
     setCategory: (state, action) => {
       state.categorySelected = action.payload // <-- category
-      if (action.payload !== 'allIds') {
-        state.housesList[action.payload] = Object.entries(state.housesList.byId)
-          .filter(([, house]) => house.type === action.payload)
-          .map(([id]) => +id)
-      }
-      state.categorySelected === 'allIds' && (state.page = 1)
     },
     setCity: (state, action) => {
       state.citySelected = action.payload // <-- city
-      if (action.payload !== 'allIds') {
-        state.housesList[action.payload] = Object.keys(state.housesList.byId)
-          .filter(key => state.housesList.byId[key].city === action.payload)
-          .map(id => +id)
-      }
-      state.categorySelected === 'allIds' && (state.page = 1)
-    }
+    },
   },
   extraReducers: builder => {
     builder
@@ -69,10 +53,12 @@ export const houseSlice = createSlice({
       .addCase(getHouses.rejected, state => {
         state.reqStatus = 'failed'
       })
-      .addCase(getHouses.fulfilled, (state, action) => { // <-- houses from the API arrive here
+      .addCase(getHouses.fulfilled, (state, action) => {
+        // <-- houses from the API arrive here
         state.reqStatus = 'success'
 
-        action.payload.forEach(house => { // <-- for each individual house we do the next things
+        action.payload.forEach(house => {
+          // <-- for each individual house we do the next things
           const { id, city, type: category } = house
 
           if (!state.housesList.allIds.includes(id)) {
@@ -89,17 +75,17 @@ export const houseSlice = createSlice({
           }
 
           // CATEGORIES 🏡🏰
-          const isCategory = state.housesList.byCategories.find(c => c.value === category)
+          const isCategory = state.housesList.byCategories.find(
+            c => c.value === category,
+          )
           if (!isCategory) {
             state.housesList.byCategories.push({
               value: category,
               text: category.charAt(0).toUpperCase() + category.slice(1),
-          })
+            })
           }
           state.housesList.byId[id] = house
-
         })
-
       })
   },
 })
