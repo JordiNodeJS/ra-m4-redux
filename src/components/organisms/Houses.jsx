@@ -23,7 +23,7 @@ function Houses() {
     console.log(filterIds)
     console.log(byId)
     console.log('result', getFilteredByIds(byId, filterIds))
-  }, [dispatch, page, filterIds])
+  }, [dispatch, page])
   
 
   const handleClick = () => {
