@@ -20,9 +20,6 @@ function Houses() {
 
   useEffect(() => {
     dispatch(getHouses(page))
-    console.log(filterIds)
-    console.log(byId)
-    console.log('result', getFilteredByIds(byId, filterIds))
   }, [dispatch, page])
   
 
