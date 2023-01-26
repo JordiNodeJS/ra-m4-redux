@@ -34,15 +34,7 @@ export const houseSlice = createSlice({
                       id: 2,
                       title: 'Piso 2',
                     },
-                  } */,
-      /* 
-      madrid: [],
-      barcelona: [],
-      zaragoza: [],
-      garaje: [],
-      chalets: [],
-      piso: []
-      */
+                  } */
     },
   },
   reducers: {
