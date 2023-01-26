@@ -18,11 +18,8 @@ export const getHouses = createAsyncThunk('houses/getHouses', async (number = 1,
 export const houseSlice = createSlice({
   name: 'houses',
   initialState: {
-    reqStatus: 'initial',
-    page: 1,
-    categorySelected: '',
-    citySelected: '',
     housesList: {
+      filterIds: [],
       byCities: [], //  byCities: [{value: 'madrid', text: 'Madrid' }, {...}, {..}]
       byCategories: [], // byCategories:  [{value: 'garaje', text: 'Garaje' }, {...}, {..}]
       allIds: [],
@@ -37,6 +34,10 @@ export const houseSlice = createSlice({
                     },
                   } */
     },
+    reqStatus: 'initial',
+    page: 1,
+    categorySelected: '',
+    citySelected: '',
   },
   reducers: {
     setCategory: (state, action) => {

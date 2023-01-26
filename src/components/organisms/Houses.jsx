@@ -5,14 +5,14 @@ import { Button } from '../atoms'
 import { HouseCard } from '../molecules'
 import { FlexBox, Grid } from '../../styles'
 import { getHouses } from '../../store/slices/houseSlice'
+import { getFilteredByIds } from '../../utils/filters'
 
 const HousesStyled = styled(FlexBox)``
 
 function Houses() {
   const [page, setPage] = useState(1)
   const {
-    housesList: houses,
-
+    housesList: { byId, filterIds },
     reqStatus,
   } = useSelector(state => state.houses)
 
@@ -20,7 +20,11 @@ function Houses() {
 
   useEffect(() => {
     dispatch(getHouses(page))
-  }, [page])
+    console.log(filterIds)
+    console.log(byId)
+    console.log('result', getFilteredByIds(byId, filterIds))
+  }, [dispatch, page, filterIds])
+  
 
   const handleClick = () => {
     setPage(page + 1)
@@ -32,37 +36,19 @@ function Houses() {
       {reqStatus === 'failed' && <div>Error</div>}
       {reqStatus === 'success' && (
         <Grid gridGap="32px">
-          {houses.filterIds
-            ? houses.filterIds
-                .map(id => houses.byId[id])
-                .map(house => (
-                  <HouseCard
-                    key={house.id}
-                    title={house.title}
-                    price={`${house.price}€`}
-                    img={house.image}
-                    link=""
-                  />
-                ))
-            : houses.allIds
-                .map(id => houses.byId[id])
-                .map(house => (
-                  <HouseCard
-                    key={house.id}
-                    title={house.title}
-                    price={`${house.price}€`}
-                    img={house.image}
-                    link=""
-                  />
-                ))}
-          {}
+          {getFilteredByIds(byId, filterIds).map(house => (
+            <HouseCard
+              key={house.id}
+              title={house.title}
+              price={`${house.price}€`}
+              img={house.image}
+              link=""
+            />
+          ))}
         </Grid>
       )}
       <FlexBox align="center">
-        <Button
-          style={{ marginTop: '2rem' }}
-          onClick={handleClick}
-        >
+        <Button style={{ marginTop: '2rem' }} onClick={handleClick}>
           Load more
         </Button>
       </FlexBox>

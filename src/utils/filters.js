@@ -19,3 +19,8 @@ export const filterHouses = (byId, selection, payload) =>
   Object.entries(byId)
     .filter(([, house]) => house[selection] === payload)
     .map(house => house[0])
+
+export const getFilteredByIds = (byId, filterArray = []) => 
+  Object.values(byId)
+    .filter(item => filterArray.length === 0 || filterArray.map(Number).includes(item.id))
+    .sort((a, b) => a.id - b.id);
