@@ -1,6 +1,7 @@
 // category selected
-export const categoryHouses = ({ byId ={}, category }) => 
-   Object.entries(byId)
+// Array Houses [{...}, {...}, ...]
+export const categoryHouses = ({ byId = {}, category }) =>
+  Object.entries(byId)
     .filter(([, house]) => house.type === category)
     .map(house => house[1])
 
@@ -13,3 +14,8 @@ export const cityHouses = ({ byId = {}, city }) =>
 
 // Array Houses [{...}, {...}, ...]
 export const allHouses = (byId = {}) => Object.keys(byId).map(id => byId[id])
+
+export const filterHouses = (byId, selection, payload) =>
+  Object.entries(byId)
+    .filter(([, house]) => house[selection] === payload)
+    .map(house => house[0])

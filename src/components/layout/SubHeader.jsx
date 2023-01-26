@@ -48,12 +48,10 @@ function SubHeader({ ...props }) {
   // handlers
   const handleChangeCategory = e => {
     dispatch(setCategory(e.target.value))
-    dispatch(setCity(''))
   }
   const handleChangeCity = e => {
     dispatch(setCity(e.target.value))
     console.log('all', categorySelected)
-    dispatch(setCategory('allIds'))
   }
 
   return (

@@ -3,10 +3,11 @@
 
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { urls } from '../../constants'
+import { filterHouses } from '../../utils/filters'
 
-// thunks
-export const getHouses = createAsyncThunk('houses/getHouses', async (name = '', { rejectWithValue }) => {
-  const res = await fetch( `${urls.houses}/${name}`)
+// thunks ex. http://localhost:3001/pisos?_page=2&_limit=3
+export const getHouses = createAsyncThunk('houses/getHouses', async (number = 1, { rejectWithValue }) => {
+  const res = await fetch( `${urls.houses}?_page=${number}&_limit=9`)
   const data = await res.json()
   if (res.status < 200 || res.status >= 300) {
     return rejectWithValue(data)
@@ -22,8 +23,8 @@ export const houseSlice = createSlice({
     categorySelected: '',
     citySelected: '',
     housesList: {
-      byCities: [{ value: 'allIds', text: 'All' }], //  byCities: [{value: 'madrid', text: 'Madrid' }, {...}, {..}]
-      byCategories: [{ value: 'allIds', text: 'All' }], // byCategories:  [{value: 'garaje', text: 'Garaje' }, {...}, {..}]
+      byCities: [], //  byCities: [{value: 'madrid', text: 'Madrid' }, {...}, {..}]
+      byCategories: [], // byCategories:  [{value: 'garaje', text: 'Garaje' }, {...}, {..}]
       allIds: [],
       byId: {} /*  {
                     1: {
@@ -40,9 +41,13 @@ export const houseSlice = createSlice({
   reducers: {
     setCategory: (state, action) => {
       state.categorySelected = action.payload // <-- category
+      const selection = 'type'
+      state.housesList.filterIds = filterHouses(state.housesList.byId, selection, action.payload)
     },
     setCity: (state, action) => {
       state.citySelected = action.payload // <-- city
+      const selection = 'city'
+      state.housesList.filterIds = filterHouses(state.housesList.byId, selection, action.payload)
     },
   },
   extraReducers: builder => {
@@ -53,13 +58,12 @@ export const houseSlice = createSlice({
       .addCase(getHouses.rejected, state => {
         state.reqStatus = 'failed'
       })
-      .addCase(getHouses.fulfilled, (state, action) => {
-        // <-- houses from the API arrive here
+      .addCase(getHouses.fulfilled, (state, action) => { // <-- houses from the API arrive here
         state.reqStatus = 'success'
 
-        action.payload.forEach(house => {
-          // <-- for each individual house we do the next things
+        action.payload.forEach(house => { // <-- for each individual house we do the next things
           const { id, city, type: category } = house
+          state.housesList.byId[id] = house
 
           if (!state.housesList.allIds.includes(id)) {
             state.housesList.allIds.push(id)
@@ -84,8 +88,9 @@ export const houseSlice = createSlice({
               text: category.charAt(0).toUpperCase() + category.slice(1),
             })
           }
-          state.housesList.byId[id] = house
         })
+        
+
       })
   },
 })
